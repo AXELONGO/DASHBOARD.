@@ -318,6 +318,10 @@ export const generateDailyReportPDF = (history: HistoryItem[]) => {
                 timeStr = d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
             }
         }
+        // Final safety check
+        if (!timeStr || timeStr.toString().includes("Invalid") || timeStr === "Invalid Date") {
+            timeStr = "--:--";
+        }
 
         return [
             timeStr,

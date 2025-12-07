@@ -205,7 +205,7 @@ const QuotesView: React.FC<QuotesViewProps> = ({ leads }) => {
                     <h2 className="text-xl font-bold text-white text-glow tracking-tight">Nueva Cotización</h2>
                 </div>
 
-                <div className="glass-panel p-6 md:p-8 rounded-2xl relative overflow-hidden">
+                <div className="glass-panel p-6 md:p-8 rounded-2xl relative">
                     {/* Header Data */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div className="space-y-4">
@@ -376,15 +376,16 @@ const QuotesView: React.FC<QuotesViewProps> = ({ leads }) => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex justify-end gap-4 border-t border-white/10 pt-6">
+                    <div className="flex justify-end gap-4 border-t border-white/10 pt-6 relative z-50">
                         <button
                             type="button"
-                            onClick={() => {
-                                console.log("Click en botón detectado (Inline)");
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                alert("DEBUG: Click detectado. Iniciando envío...");
                                 handleSendWhatsApp();
                             }}
-                            disabled={isWhatsappLoading}
-                            className="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-lg flex items-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed hover:scale-105 cursor-pointer"
+                            className="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-8 rounded-lg flex items-center gap-2 transition-all shadow-lg active:scale-95 hover:scale-105 cursor-pointer relative z-50"
                         >
                             {isWhatsappLoading ? (
                                 <span className="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
@@ -396,6 +397,22 @@ const QuotesView: React.FC<QuotesViewProps> = ({ leads }) => {
                     </div>
                 </div>
             </section>
+
+            {/* FLOATING ACTION BUTTON (BACKUP) */}
+            <div className="fixed bottom-24 right-6 z-40 md:hidden">
+                <button
+                    type="button"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        alert("DEBUG: Click en botón flotante");
+                        handleSendWhatsApp();
+                    }}
+                    className="bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform border-2 border-white/20"
+                >
+                    <span className="material-symbols-outlined text-[28px]">send</span>
+                </button>
+            </div>
         </div>
     );
 };
