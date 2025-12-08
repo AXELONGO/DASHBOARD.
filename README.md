@@ -17,6 +17,18 @@ This plan covers three major features requested by the user:
 
 ### Proposed Changes
 
+#### Feature 4. UI Improvements & Fixes
+
+**Changes:**
+-   **Header**: Added "Refresh" and "Logout" buttons for better user control.
+-   **History Sidebar**: Implemented a **Client Search Filter** (dropdown) to filter history by specific clients.
+-   **Deployment**: Updated `Dockerfile` to fix Nginx serving issues and added `guia_despliegue_vps.md` with Ngrok instructions for HTTPS.
+
+**Verification:**
+1.  **Header**: Check top right corner for new buttons.
+2.  **History**: Open sidebar, use the dropdown to select a client -> List should filter.
+3.  **Deployment**: Follow the new guide to deploy on VPS with HTTPS.
+
 #### Feature 1: History Date Range Download
 
 - **[MODIFY] server.js**: Update `GET /api/history` to accept `startDate` and `endDate` query parameters. Implement Notion filter logic.
