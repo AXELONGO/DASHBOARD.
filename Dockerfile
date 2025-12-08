@@ -18,13 +18,15 @@ COPY . .
 
 # Build the application
 RUN npm run build
-RUN ls -R dist
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
 # Copy the build output from the previous stage to the Nginx html directory
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Fix for weird build output structure where index.html ends up in /app/
+RUN if [ -f /usr/share/nginx/html/app/index.html ]; then mv /usr/share/nginx/html/app/index.html /usr/share/nginx/html/index.html; fi
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
