@@ -4,6 +4,7 @@ services:
   erp-dashboard:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
         - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
     ports:
@@ -13,12 +14,14 @@ services:
     restart: always
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     ports:
       - "3001:3001"
     environment:
-      - NOTION_API_KEY=${VITE_NOTION_API_KEY}
-      - NOTION_DATABASE_ID=${VITE_NOTION_DATABASE_ID}
-      - NOTION_HISTORY_DB_ID=${VITE_NOTION_HISTORY_DB_ID}
+      - NOTION_API_KEY=${NOTION_API_KEY}
+      - NOTION_DATABASE_ID=${NOTION_DATABASE_ID}
+      - NOTION_HISTORY_DB_ID=${NOTION_HISTORY_DB_ID}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
     restart: always

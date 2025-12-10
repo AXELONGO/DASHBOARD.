@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "cd backend && npm install && npm start"
+    ports:
+      - "3001:3001"
+    environment:
+      - NOTION_API_KEY=${NOTION_API_KEY}
+      - NOTION_DATABASE_ID=${NOTION_DATABASE_ID}
+      - NOTION_HISTORY_DB_ID=${NOTION_HISTORY_DB_ID}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - PORT=3001
+    volumes:
+      - ./backend:/app/backend
+    restart: always
+
+  # Frontend Service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    restart: always
